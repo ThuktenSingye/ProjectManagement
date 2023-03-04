@@ -1,0 +1,31 @@
+.navbar{
+    width: 100%;
+    padding: 30px 0;
+    box-sizing: border-box;
+    margin-bottom: 80px;
+}
+.navbar ul{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.navbar .logo{
+    color: var(--heading-color);
+    font-weight: bold;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+}
+.navbar .logo img{
+    margin-right: 10px;
+    width: 36px;
+    filter: invert(25%);
+    margin-top: -8px;
+}
+.navbar a{
+    color: #333;
+    text-decoration: none;
+    margin-right: 20px;
+
+}
