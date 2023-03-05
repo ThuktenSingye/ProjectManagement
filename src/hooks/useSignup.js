@@ -11,7 +11,7 @@ const useSignup = ()=>{
     const [error, setError] = useState(null)
     const [isPending, setIsPending] = useState(false)
     const {dispatch} = useAuthContext()
-
+    // const [imgURL, setImageURL]  = useState(null)
     const signup = async (email, password, displayName, thumbnail)=>{
         setError(null) // reset error everytime we sign in
         setIsPending(true)
@@ -22,19 +22,24 @@ const useSignup = ()=>{
 
             // upload user thumbnai on the following path 
             const uploadPath = `thumbnails/${user.uid}/${thumbnail.name}`
-            const storageRef = ref(projectStorage, thumbnail)
+            const imgRef = ref(projectStorage, uploadPath)
 
-            const imgURL = getDownloadURL(storageRef) // it will get user id
             // upload image
-            uploadBytes(storageRef, uploadPath).then((snapshot)=>{
-                console.log("Upload image ")
-            })
+            uploadBytes(imgRef, thumbnail).then((snapshot)=>{
+                getDownloadURL(imgRef).then((url)=>{    
+                    updateProfile(user, {displayName, photoURL:url}).then((result)=>{ // used to update profile
 
-            updateProfile(user, {displayName, photoURL: imgURL}).then((result)=>{ // used to update profile
-            
+                    }).catch(err=>{
+                        setError(err.message)
+                    })
+                
+                    })
+            }).then(()=>{
+                setError(null)
             }).catch(err=>{
                 setError(err.message)
             })
+
             // disptach login function
             dispatch({type:'LOGIN', payload:user})
 
