@@ -1,7 +1,7 @@
 import {initializeApp} from 'firebase/app'
 import {getAuth} from 'firebase/auth'
 import {getFirestore} from 'firebase/firestore'
-
+import {getStorage} from 'firebase/storage'
 const firebaseConfig = {
     apiKey: "AIzaSyDVz74EvjuW_jwFcvsizs3-F9k-j08D3Ns",
     authDomain: "projectsite-1cbd7.firebaseapp.com",
@@ -18,6 +18,7 @@ const app = initializeApp(firebaseConfig)
 // init firebase services
 const projectFirestore = getFirestore()
 const projectAuth = getAuth(app)
+const projectStorage = getStorage(app)
 
 
-export  {projectFirestore, projectAuth}
+export  {projectFirestore, projectAuth, projectStorage}
