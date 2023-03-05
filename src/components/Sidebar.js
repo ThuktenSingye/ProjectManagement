@@ -21,7 +21,7 @@ function Sidebar() {
             <nav className="links">
                 <ul>
                     <li>
-                        <NavLink exact to="/">
+                        <NavLink exact='true' to="/">
                             <img src={DashboardIcon} alt="dashboardIcon" />  
                             <span>Dashboard</span>                  
                         </NavLink>
