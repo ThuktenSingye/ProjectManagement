@@ -17,7 +17,7 @@ const useCollection = (data, para, _orderBy) =>{
         if (q){
             ref = query(ref, orderBy(...sortBy),where(...q))
         }
-    
+        
         const unsub = onSnapshot(ref, (snapshot)=>{
             let results = []
             snapshot.docs.forEach(doc =>{

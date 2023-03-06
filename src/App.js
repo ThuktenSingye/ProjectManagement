@@ -12,6 +12,7 @@ import Sidebar from './components/Sidebar';
 import React from 'react';
 // import context
 import useAuthContext from './hooks/useAuthContext';
+import OnlineUsers from './components/OnlineUsers';
 
 function App() {
   // based on user state like if user is null or is login, we can redirect to different component
@@ -32,6 +33,7 @@ function App() {
                 <Route path='/signup' element={ user ? <Navigate to='/'/>:<Signup />}/>    
               </Routes>
             </div>
+          {user && <OnlineUsers />}
         </BrowserRouter>
       )}
     </div>
