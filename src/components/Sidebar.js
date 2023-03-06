@@ -7,14 +7,17 @@ import addIcon from "../assets/add_icon.svg"
 
 // import navlinks
 import { NavLink } from 'react-router-dom'
+import Avatar from './Avatar'
+import useAuthContext from '../hooks/useAuthContext'
 
 function Sidebar() {
+    const {user} = useAuthContext() // to get photo url
   return(
     <div className='sidebar'>
         <div className='sidebar-content'>
             <div className="user">
-                {/* avatar and user */}
-                <p>Hey user</p>
+                <Avatar src = {user.photoURL}/>
+                <p>Hey {user.displayName}</p>
             </div>
 
             {/* below is the link to dash board and the crate */}
