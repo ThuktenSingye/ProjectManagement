@@ -10,7 +10,7 @@ function Signup() {
   const [thumbnail, setThumbnail] = useState(null)
   const [thumbnailError, setThumbnailError] = useState(null)
 
-  const {signup, isPending, error} = useSignup()
+  const {isPending, error, signup} = useSignup()
 
   const handleFileChange = (e) =>{
     // setThumbnail(null)
@@ -77,7 +77,8 @@ function Signup() {
          {thumbnailError && <div className='error'>{thumbnailError}</div>}
       </label>
       {!isPending && <button className='btn'>Sign Up</button>}
-      {isPending && <button className='btn' disabled>Loading</button>}
+      {isPending && <button className='btn' disabled>Loading ..</button>}
+      
       {error && <div className='error'>{error}</div>}
     </form>
   )

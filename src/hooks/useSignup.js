@@ -39,6 +39,7 @@ const useSignup = ()=>{
 
             const imgURL = await  getDownloadURL(imgRef)
             await  updateProfile(user, {displayName, photoURL:imgURL}).then((result)=>{
+                setIsPending(false)
                 setError(null)
             }).catch(err=>{
                 setError(err.message)
@@ -48,7 +49,7 @@ const useSignup = ()=>{
             // create user document this will show user with theri avatar and whether they are online or not 
             const collectionRef = collection(projectFirestore, 'user') // get collection
             const docRef = doc(collectionRef,user.uid) // get document referece from collection
-            setDoc(docRef,{
+            await setDoc(docRef,{
                 online: true,
                 displayName,
                 photoURL: imgURL
@@ -65,7 +66,10 @@ const useSignup = ()=>{
         
             
         }catch(err){
-            setError(err.message)
+            if (!isCancelled){
+                setIsPending(false)
+                setError(null)
+            }
         }
     }
 

@@ -14,19 +14,29 @@ const useLogOut = () =>{
     const logout = async () =>{
         setError(null)
         setIsPending(true)
-
         // sign the user out
         try{
+            
             // set online to false before logging out
             const {uid} = user
             // updateDoc(doc(projectFirestore, `user/${uid}`), {online: false})
             updateDoc(doc(collection(projectFirestore, 'user'), uid), { online: false })
-            .then(() => setError(null))
+            .then(() => {
+                setIsPending(false)
+                setError(null)
+            })
             .catch(err => setError(err.message))
 
-            await projectAuth.signOut()
+            await projectAuth.signOut().then(()=>{
+                setIsPending(false)
+                setError(null)  
+            }).catch(err=>{
+                setIsPending(false)
+                setError(null)
+            })
             // dispatch logout action
             dispatch({type: "LOGOUT"})
+        
             if(!isCancelled){
                 setIsPending(false)
                 setError(null)
