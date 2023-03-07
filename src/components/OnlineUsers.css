@@ -24,3 +24,13 @@
     width: 40px;
     height: 40px;
 }
+/* for online user */
+.user-list .online-user{
+    display: inline-block;
+    background: #0ebb50;
+    margin-right: 10px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: 2px; 
+}

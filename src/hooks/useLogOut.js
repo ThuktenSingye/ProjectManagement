@@ -16,11 +16,10 @@ const useLogOut = () =>{
         setIsPending(true)
         // sign the user out
         try{
-            
             // set online to false before logging out
             const {uid} = user
             // updateDoc(doc(projectFirestore, `user/${uid}`), {online: false})
-            updateDoc(doc(collection(projectFirestore, 'user'), uid), { online: false })
+            await updateDoc(doc(collection(projectFirestore, 'user'), uid), { online: false })
             .then(() => {
                 setIsPending(false)
                 setError(null)
