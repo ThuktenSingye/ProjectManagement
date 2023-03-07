@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Create.css"
 // import select component from reacts-select
 import Select from 'react-select'
+// import collectino to get user info for assigning projeect
+import useCollection from '../../hooks/useCollection'
 
 const categories = [
   {value: 'development', label : 'Development'},
@@ -10,6 +12,20 @@ const categories = [
   {value:'marketing', label: 'Marketing'}
 ]
 function Create() {
+  const {documents} = useCollection('user')
+  const [users, setUsers] = useState([])
+
+  // we can use useEffect hook by setting document as dependecny to document can be updated
+  useEffect(()=>{
+    if (documents){
+      const options = documents.map(user=>{
+        return {value: user, label:user.displayName}
+      })
+      setUsers(options)
+    }
+  }, [documents])
+
+  // all form state
   const [name, setName] = useState('')
   const [details, setDetails] = useState('')
   const [dueDate, setDueDate] = useState('')
@@ -18,7 +34,7 @@ function Create() {
 
   const handleSubmit = (e) =>{
     e.preventDefault()
-    console.log(name, details, dueDate, category.value)
+    console.log(name, details, dueDate, category.value, assignedUsers.label)
   }
 
   return (
@@ -61,7 +77,11 @@ function Create() {
         </label>
         <label>
           <span>Assigned to:</span>
-          {/* assigned to  */}
+          <Select 
+            options={users}
+            onChange={(option)=>setAssignedUsers(option)}
+            isMulti
+          />
         </label>
         <button className='btn'>Add Project</button>
       </form>
