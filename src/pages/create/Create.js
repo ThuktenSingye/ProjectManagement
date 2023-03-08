@@ -9,6 +9,10 @@ import useCollection from '../../hooks/useCollection'
 import { Timestamp } from 'firebase/firestore'
 import useAuthContext from "../../hooks/useAuthContext"
 
+import useFirestore from "../../hooks/useFirestore"
+// import history
+import {useNavigate} from 'react-router-dom' // use useNavigate hook in dom version > 6
+
 const categories = [
   {value: 'development', label : 'Development'},
   {value: 'design', label: 'Design'},
@@ -19,6 +23,8 @@ function Create() {
   const {documents} = useCollection('user')
   const [users, setUsers] = useState([])
   const {user} = useAuthContext()
+  const {addDocument, response} = useFirestore('projects') // this is new collection 
+  const navigate = useNavigate()
 
   // we can use useEffect hook by setting document as dependecny to document can be updated
   useEffect(()=>{
@@ -39,7 +45,7 @@ function Create() {
   const [formError, setFormError] = useState(null)
 
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = async (e) =>{
     e.preventDefault()
     // check whether if user has selected the option
     setFormError(null)
@@ -77,7 +83,12 @@ function Create() {
       assignedUsersList
     }
     
-    console.log(project)
+    // now add this project in firestore firebase
+    await addDocument(project)
+    if (!response.error){
+      navigate('/')// not error redirect to dashboard
+    }
+
   }
 
   return (
