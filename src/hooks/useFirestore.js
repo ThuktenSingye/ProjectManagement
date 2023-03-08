@@ -3,7 +3,7 @@
 // import { Timestamp } from "firebase/firestore"
 import { useReducer, useEffect, useState } from "react"
 import { projectFirestore} from "../firebase/config"
-import { Timestamp , collection, addDoc, doc, deleteDoc} from "firebase/firestore"
+import { Timestamp , collection, addDoc, doc, deleteDoc, updateDoc} from "firebase/firestore"
 const firestoreReducer = (state,action) =>{
     switch(action.type){
         case 'IS_PENDING':
@@ -12,6 +12,8 @@ const firestoreReducer = (state,action) =>{
             return {isPending: false, document: action.payload, success: true, error: null}
         case 'DELETED_DOCUMENT':
             return {isPending: false, document:null, success: true, error: null}
+        case 'UPDATED_DOCUMENT':
+            return {isPending:false, document: action.payload, success: true, error: null}
         case 'ERROR':
             return{isPending:false, document:null, success:false, error: action.payload}
         default:
@@ -59,6 +61,20 @@ const useFirestore = (collect) =>{
 
         }catch(err){
             dispatchIfNotCancelled({type:'ERROR',payload: 'could not delete'})
+        }
+    }
+    // for updating
+    const updateDocument = async (id, updates)=>{
+        dispatch({type:"IS_PENDING"})
+        try{
+            const updatedDocument = updateDoc(doc(ref, id),{
+                comments: updates
+            })
+            dispatchIfNotCancelled({type:'UPDATED_DOCUMENTS', payload: updatedDocument})
+            return updatedDocument
+
+        }catch(err){
+            dispatchIfNotCancelled({type:'ERROR',payload: 'could not update'})
         }
     }
     // // cleanup function
