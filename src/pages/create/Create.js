@@ -31,9 +31,22 @@ function Create() {
   const [dueDate, setDueDate] = useState('')
   const [category, setCategory] = useState('')
   const [assignedUsers, setAssignedUsers] = useState([])
+  const [formError, setFormError] = useState(null)
+
 
   const handleSubmit = (e) =>{
     e.preventDefault()
+    // check whether if user has selected the option
+    setFormError(null)
+    if (!category){
+      setFormError("Please select a project category")
+      return // return say dont execute any further code
+    }
+    if (assignedUsers.length < 1){ // no assigned user
+      setFormError("Set assign the project to at least one user")
+      return
+    }
+    
     console.log(name, details, dueDate, category.value, assignedUsers.label)
   }
 
@@ -84,6 +97,7 @@ function Create() {
           />
         </label>
         <button className='btn'>Add Project</button>
+        {formError && <p className='error'>{formError}</p>}
       </form>
     </div>
   )
