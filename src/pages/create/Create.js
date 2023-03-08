@@ -5,6 +5,10 @@ import Select from 'react-select'
 // import collectino to get user info for assigning projeect
 import useCollection from '../../hooks/useCollection'
 
+// import timestamp
+import { Timestamp } from 'firebase/firestore'
+import useAuthContext from "../../hooks/useAuthContext"
+
 const categories = [
   {value: 'development', label : 'Development'},
   {value: 'design', label: 'Design'},
@@ -14,6 +18,7 @@ const categories = [
 function Create() {
   const {documents} = useCollection('user')
   const [users, setUsers] = useState([])
+  const {user} = useAuthContext()
 
   // we can use useEffect hook by setting document as dependecny to document can be updated
   useEffect(()=>{
@@ -46,8 +51,33 @@ function Create() {
       setFormError("Set assign the project to at least one user")
       return
     }
+    // now create an project object that will store project detail and will be used to store in firestore database
+    // below is information object about user that created that document
+
+    const createdBy = {
+      displayName : user.displayName,
+      photoURl: user.photoURL,
+      id: user.uid
+    }
+    // below is assigned user list
+    const assignedUsersList = assignedUsers.map((u)=>{
+      return {
+        displayName: u.value.displayName,
+        photoURL: u.value.photoURL,
+        id: u.value.id
+      }
+    })
+    const project = {
+      name,
+      details,
+      category: category.value,
+      dueDate: Timestamp.fromDate(new Date()),
+      comments: [],
+      createdBy,
+      assignedUsersList
+    }
     
-    console.log(name, details, dueDate, category.value, assignedUsers.label)
+    console.log(project)
   }
 
   return (
