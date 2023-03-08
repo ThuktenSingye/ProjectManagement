@@ -35,3 +35,11 @@
 .project_summary + .btn{
     margin-top: 20px;
 }
+/*  project commen */
+.project_comments label{
+    margin-bottom: 0px;
+}
+.project_comments textarea{
+    min-height: 40px;
+    font-size: 1.5em;
+}
