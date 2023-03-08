@@ -8,15 +8,21 @@ const useDocument = (db, id) =>{
     // realtiem data for document
     useEffect(()=>{
         const ref = doc(collection(projectFirestore,db), id) // doc ref
-       const unsub= onSnapshot(doc, (snapshot)=>{
-            setDocument({...snapshot.data, id: snapshot.id})
-            setError(null)
+        
+        const unsub= onSnapshot(ref, (snapshot)=>{
+            if (snapshot.data()){
+                setDocument({...snapshot.data(), id: snapshot.id})
+                setError(null)
+            }else{
+                setError('no such document exist')
+            }
         }, (err)=>{
             setError("failed to get document")
         })
 
         return () => unsub()// cleanup function
     }, [db, id])
+
     return {document, error}
 }
 export default useDocument
