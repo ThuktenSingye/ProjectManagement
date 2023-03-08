@@ -3,6 +3,7 @@ import "./Dashboard.css"
 // this is where we output the project
 import useCollection from '../../hooks/useCollection'
 import ProjectList from '../../components/ProjectList'
+
 function Dashboard() {
   const {documents, error} = useCollection('projects')
 
