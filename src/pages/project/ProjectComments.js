@@ -4,6 +4,8 @@ import useAuthContext from '../../hooks/useAuthContext'
 import { Timestamp } from 'firebase/firestore'
 import useFirestore from '../../hooks/useFirestore'
 import Avatar from "../../components/Avatar"
+import {formatDistanceToNow} from 'date-fns'  // its look at date comment created and date when we are on web apge. it then guess the different between them 
+
 function ProjectComments({project}) {
     const [newComment, setNewComment] = useState('')
     const {user} = useAuthContext()
@@ -37,7 +39,8 @@ function ProjectComments({project}) {
                         <p>{comment.displayName}</p>
                     </div>
                     <div className="comment-date">
-                        <p>date here</p>
+                        <p>{formatDistanceToNow(comment.createdAt.toDate(), {addSuffix: true})}</p> 
+                        {/*  addSuffix to true add suffix at the end like 21 minute (ago) */}
                     </div>
                     <div className="comment-content">
                         <p>{comment.content}</p>
