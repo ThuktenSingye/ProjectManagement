@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
+import {BrowserRouter, Route, Routes, Navigate , useNavigate} from 'react-router-dom'
 import './App.css';
 
 // import pages and component
@@ -17,7 +17,7 @@ import OnlineUsers from './components/OnlineUsers';
 function App() {
   // based on user state like if user is null or is login, we can redirect to different component
   const {user, authIsReady} = useAuthContext()
-
+  
   return (
     <div className="app">
       {authIsReady && (

@@ -21,7 +21,6 @@ const useLogin = () =>{
             const user = res.user
             // update the online status
             const {uid} = user
-
             await updateDoc(doc(projectFirestore, 'user', uid), {online: true}) 
             // updateDoc(doc(projectFirestore, 'user', uid), { online: true })
             .then(() => {
@@ -41,7 +40,6 @@ const useLogin = () =>{
             }
             
         }catch(err){
-        
             if (!isCancelled){
                 setIsPending(false)
                 setError(err.message)

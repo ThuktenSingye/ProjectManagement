@@ -13,6 +13,7 @@ import useFirestore from "../../hooks/useFirestore"
 // import history
 import {useNavigate} from 'react-router-dom' // use useNavigate hook in dom version > 6
 
+
 const categories = [
   {value: 'development', label : 'Development'},
   {value: 'design', label: 'Design'},
@@ -59,7 +60,6 @@ function Create() {
     }
     // now create an project object that will store project detail and will be used to store in firestore database
     // below is information object about user that created that document
-
     const createdBy = {
       displayName : user.displayName,
       photoURl: user.photoURL,
@@ -85,6 +85,7 @@ function Create() {
     
     // now add this project in firestore firebase
     await addDocument(project)
+    
     if (!response.error){
       navigate('/')// not error redirect to dashboard
     }

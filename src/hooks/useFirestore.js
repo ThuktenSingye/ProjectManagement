@@ -41,7 +41,6 @@ const useFirestore = (collect) =>{
     }   
     // //to  add document
     const addDocument = async (doc) =>{
-
         dispatch({type:"IS_PENDING"})
         try{
             const createdAt = Timestamp.fromDate(new Date())

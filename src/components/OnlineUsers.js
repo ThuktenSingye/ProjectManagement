@@ -4,6 +4,7 @@ import "./OnlineUsers.css"
 import useCollection from '../hooks/useCollection'
 // import avatar component
 import Avatar from './Avatar.js'
+
 function OnlineUsers() {
     const {documents, error} = useCollection('user') // fetch the collection document
 

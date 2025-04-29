@@ -1,3 +1,4 @@
+// this is used to fetch data 
 import { collection, doc , onSnapshot} from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { projectFirestore } from "../firebase/config"
@@ -8,7 +9,7 @@ const useDocument = (db, id) =>{
     // realtiem data for document
     useEffect(()=>{
         const ref = doc(collection(projectFirestore,db), id) // doc ref
-        
+
         const unsub= onSnapshot(ref, (snapshot)=>{
             if (snapshot.data()){
                 setDocument({...snapshot.data(), id: snapshot.id})
